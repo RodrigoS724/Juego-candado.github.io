@@ -241,26 +241,28 @@
     .timer.active { border-color: var(--green-bright); color: var(--green-bright); }
 
     .lemon-trigger {
-      position: absolute;
-      z-index: 4;
-      right: 14px;
-      bottom: 14px;
-      width: 31px;
-      height: 31px;
+      position: fixed;
+      z-index: 8;
+      left: max(10px, env(safe-area-inset-left));
+      bottom: max(10px, env(safe-area-inset-bottom));
+      width: 22px;
+      height: 22px;
       padding: 0;
       border: 1px solid transparent;
       border-radius: 50%;
-      font-size: 1.05rem;
+      font-size: .72rem;
       background: transparent;
       cursor: pointer;
-      filter: saturate(.75);
-      transition: filter .2s, transform .2s, border-color .2s;
+      opacity: .28;
+      filter: saturate(.65) brightness(.72);
+      transition: filter .2s, transform .2s, border-color .2s, opacity .2s;
     }
 
     .lemon-trigger:hover, .lemon-trigger:focus-visible, .lemon-trigger.active {
-      border-color: #d8ff51;
-      filter: saturate(1.2) drop-shadow(0 0 5px #d8ff51);
-      transform: rotate(-12deg) scale(1.12);
+      border-color: #c8bd39;
+      opacity: .9;
+      filter: saturate(1) brightness(.95) drop-shadow(0 0 4px #c8bd39);
+      transform: rotate(-12deg) scale(1.08);
       outline: none;
     }
 
@@ -368,6 +370,25 @@
       .lock-control { transform: scale(.85); }
     }
 
+    @media (max-width: 600px) {
+      .stage { place-items: start center; padding: 8px 12px; }
+      .terminal-top { min-height: 22px; padding-bottom: 4px; font-size: .54rem; }
+      .screen { min-height: 0; padding: 10px 16px 12px; }
+      .mission-selector { margin-bottom: 7px; }
+      .mission { height: 32px; font-size: 1.15rem; }
+      .lock-control { margin: 7px auto 4px; }
+      .lock-launch { width: 56px; height: 58px; }
+      .lock-visual { transform: scale(.76); transform-origin: center bottom; }
+      h1 { font-size: 1.85rem; }
+      .instruction { min-height: 0; margin: 5px auto 7px; font-size: .7rem; }
+      .permanent-clue { margin: 0 0 8px; }
+      .digits { margin-bottom: 9px; }
+      .digit { height: clamp(62px, 17vw, 78px); aspect-ratio: auto; font-size: 2.35rem; }
+      .keypad { gap: 6px; }
+      .key { height: 36px; font-size: 1.35rem; }
+      .footer-status { margin-top: 9px; }
+    }
+
     @media (max-height: 500px) {
       .stage { place-items: start center; padding: 5px 10px; }
       .terminal-top { min-height: 18px; padding-bottom: 3px; font-size: .5rem; }
@@ -390,7 +411,6 @@
       .key.enter { font-size: .76rem; }
       .key.delete { font-size: .9rem; }
       .footer-status { display: none; }
-      .lemon-trigger { right: 6px; bottom: 4px; width: 24px; height: 24px; font-size: .8rem; }
     }
 
     @media (max-height: 360px) {
@@ -414,7 +434,6 @@
       .key { height: 20px; font-size: 1rem; }
       .key.enter { font-size: .57rem; }
       .key.delete { font-size: .67rem; }
-      .lemon-trigger { top: 36px; right: 1px; bottom: auto; width: 16px; height: 16px; font-size: .5rem; }
     }
   </style>
 </head>
@@ -449,7 +468,6 @@
           <button class="key delete" data-key="delete" aria-label="Borrar último dígito" disabled>DEL</button><button class="key" data-key="0" disabled>0</button><button class="key enter" data-key="enter" disabled>ABRIR</button>
         </div>
         <div class="footer-status"><span>&#9679;</span><span>SISTEMA EN ESPERA</span></div>
-        <button class="lemon-trigger" id="lemonTrigger" type="button" aria-label="Habilitar prueba especial" title="Prueba especial">&#127819;</button>
         <div class="modal" id="modal" role="dialog" aria-modal="true" aria-live="assertive">
           <div class="modal-panel">
             <p class="modal-title" id="modalTitle"></p>
@@ -458,6 +476,7 @@
           </div>
         </div>
       </div>
+      <button class="lemon-trigger" id="lemonTrigger" type="button" aria-label="Habilitar prueba especial" title="Prueba especial">&#127819;</button>
     </section>
   </main>
   <script>
