@@ -33,14 +33,14 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      opacity: .43;
+      opacity: .55;
     }
 
     .vignette {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(ellipse at center, transparent 20%, rgba(0, 10, 3, .62) 100%);
+      background: radial-gradient(ellipse at center, transparent 20%, rgba(0, 10, 3, .48) 100%);
     }
 
     .stage {
@@ -48,11 +48,12 @@
       display: grid;
       place-items: center;
       min-height: 100vh;
-      padding: 20px;
+      padding: 0;
     }
 
     .terminal {
-      width: min(94vw, 510px);
+      width: 100vw;
+      height: 100vh;
       padding: 0;
     }
 
@@ -70,9 +71,15 @@
     .screen {
       position: relative;
       overflow: hidden;
-      min-height: 580px;
-      padding: 28px 22px 22px;
-      background: rgba(2, 10, 4, .82);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(120px, 220px) minmax(0, 1fr);
+      grid-template-rows: auto auto auto auto 1fr;
+      column-gap: clamp(24px, 5vw, 90px);
+      align-items: center;
+      height: calc(100vh - 38px);
+      min-height: 0;
+      padding: clamp(24px, 5vh, 60px) clamp(24px, 7vw, 120px);
+      background: rgba(2, 10, 4, .58);
     }
 
     .screen::before {
@@ -87,11 +94,13 @@
     }
 
     .status {
+      grid-column: 1;
+      grid-row: 1;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: var(--green);
-      font-size: .7rem;
+      font-size: clamp(.78rem, 1vw, 1rem);
       letter-spacing: .08em;
     }
 
@@ -133,6 +142,8 @@
     }
 
     .lock-control {
+      grid-column: 1;
+      grid-row: 2;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -159,54 +170,64 @@
 
     h1, p { margin: 0; }
     h1 {
+      grid-column: 1;
+      grid-row: 3;
       color: var(--green-bright);
       text-align: center;
-      font: 2.25rem/1 "VT323", monospace;
+      font: clamp(2.4rem, 3.8vw, 4rem)/1 "VT323", monospace;
       letter-spacing: .08em;
       text-shadow: 0 0 12px var(--green);
     }
 
     .instruction {
+      grid-column: 1;
+      grid-row: 4;
       min-height: 42px;
       margin: 14px auto 23px;
       color: #89d99d;
       text-align: center;
-      font-size: .8rem;
+      font-size: clamp(.95rem, 1.3vw, 1.2rem);
       line-height: 1.5;
     }
 
     .permanent-clue {
+      grid-column: 3;
+      grid-row: 1;
       display: flex;
       align-items: baseline;
       justify-content: center;
       gap: 12px;
       margin: -8px 0 19px;
       color: #589b68;
-      font-size: .66rem;
+      font-size: clamp(.78rem, 1vw, 1rem);
       letter-spacing: .12em;
     }
 
     .permanent-clue strong {
       color: var(--green-bright);
-      font: 1.5rem "VT323", monospace;
+      font: clamp(1.7rem, 2.4vw, 2.5rem) "VT323", monospace;
       letter-spacing: .16em;
       text-shadow: 0 0 8px rgba(77, 255, 135, .7);
     }
 
     .mission-selector {
+      grid-column: 2;
+      grid-row: 1 / 6;
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 5px;
-      margin: 0 0 13px;
+      grid-template-columns: 1fr;
+      align-content: center;
+      gap: clamp(8px, 1.5vh, 16px);
+      width: 100%;
+      margin: 0;
     }
 
     .mission {
-      height: 37px;
+      height: clamp(42px, 5vh, 58px);
       padding: 0;
       border: 1px solid #1d6c38;
       border-radius: 0;
       color: #63bd78;
-      font: 1.35rem "VT323", monospace;
+      font: clamp(1.5rem, 2vw, 2.1rem) "VT323", monospace;
       background: #061508;
       cursor: pointer;
     }
@@ -233,7 +254,7 @@
       border: 1px solid #347645;
       border-radius: 0;
       color: var(--green);
-      font: .72rem "Share Tech Mono", monospace;
+      font: clamp(.8rem, 1vw, 1rem) "Share Tech Mono", monospace;
       letter-spacing: .08em;
       background: rgba(3, 20, 8, .8);
     }
@@ -267,6 +288,8 @@
     }
 
     .digits {
+      grid-column: 3;
+      grid-row: 2;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
@@ -280,7 +303,7 @@
       border: 1px solid #237541;
       border-radius: 3px;
       color: var(--green);
-      font: 3.1rem/1 "VT323", monospace;
+      font: clamp(3.2rem, 5vw, 5.5rem)/1 "VT323", monospace;
       text-align: center;
       background: #000;
       box-shadow: inset 0 0 17px rgba(0, 255, 75, .12), 0 0 8px rgba(0, 255, 75, .15);
@@ -293,17 +316,19 @@
     .digit.locked { border-color: var(--green-bright); color: #001b09; background: var(--green); box-shadow: 0 0 16px rgba(77, 255, 135, .85); }
 
     .keypad {
+      grid-column: 3;
+      grid-row: 3 / 6;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
+      gap: clamp(10px, 1.2vw, 18px);
     }
 
     .key {
-      height: 48px;
+      height: clamp(56px, 7vh, 82px);
       border: 1px solid #19592f;
       border-radius: 3px;
       color: #b3ffc4;
-      font: 1.65rem "VT323", monospace;
+      font: clamp(2rem, 3vw, 3.2rem) "VT323", monospace;
       background: rgba(8, 34, 15, .84);
       cursor: pointer;
       transition: transform .1s, background .15s, box-shadow .15s;
@@ -311,12 +336,14 @@
 
     .key:hover, .key:focus-visible { background: #174b25; box-shadow: 0 0 10px rgba(77, 255, 135, .4); outline: none; }
     .key:active { transform: translateY(2px); background: #206b35; }
-    .key.enter { color: #001b09; font-size: 1.05rem; background: var(--green); }
+    .key.enter { color: #001b09; font-size: clamp(1.2rem, 1.8vw, 2rem); background: var(--green); }
     .key.enter:hover { background: var(--green-bright); }
     .key.enter:disabled { color: #386141; background: #061009; }
-    .key.delete { color: #89d99d; font-size: 1.25rem; }
+    .key.delete { color: #89d99d; font-size: clamp(1.4rem, 2vw, 2.2rem); }
 
     .footer-status {
+      grid-column: 1;
+      grid-row: 5;
       display: flex;
       justify-content: center;
       gap: 7px;
@@ -327,11 +354,13 @@
     }
 
     .modal {
-      position: absolute;
-      z-index: 6;
+      position: fixed;
+      z-index: 20;
       inset: 0;
       display: grid;
       place-items: center;
+      width: 100vw;
+      height: 100vh;
       padding: 24px;
       text-align: center;
       background: rgba(0, 15, 5, .93);
@@ -341,7 +370,7 @@
     }
 
     .modal.show { opacity: 1; pointer-events: auto; }
-    .modal-panel { max-width: 300px; }
+    .modal-panel { width: min(100%, 560px); }
     .modal-title { color: var(--green-bright); font: 3rem "VT323", monospace; text-shadow: 0 0 14px var(--green); }
     .modal-copy { margin: 12px 0 24px; color: #b4e9bf; font-size: .85rem; line-height: 1.6; }
     .retry { padding: 11px 18px; border: 1px solid var(--green); border-radius: 3px; color: var(--green); font: .9rem "Share Tech Mono", monospace; background: transparent; cursor: pointer; }
@@ -357,11 +386,11 @@
     @keyframes unlock { 55% { transform: translateY(7px); } 100% { transform: translateY(13px); opacity: .35; } }
 
     @media (max-height: 690px) {
-      .screen { min-height: 0; padding-top: 18px; }
+      .screen { padding-top: 18px; }
       .lock-control { margin: 15px auto; transform: scale(.82); }
       .instruction { margin: 6px auto 13px; }
       .digit { font-size: 2.7rem; }
-      .key { height: 40px; }
+      .key { height: 48px; }
       .footer-status { margin-top: 12px; }
     }
 
@@ -370,22 +399,37 @@
       .lock-control { transform: scale(.85); }
     }
 
+    @media (max-width: 900px) {
+      .terminal { width: 100%; }
+
+      .screen {
+        display: block;
+        height: calc(100vh - 38px);
+      }
+
+      .mission-selector {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 5px;
+        margin: 0 0 13px;
+      }
+    }
+
     @media (max-width: 600px) {
       .stage { place-items: start center; padding: 8px 12px; }
       .terminal-top { min-height: 22px; padding-bottom: 4px; font-size: .54rem; }
-      .screen { min-height: 0; padding: 10px 16px 12px; }
+      .screen { height: calc(100vh - 26px); padding: 10px 16px 12px; }
       .mission-selector { margin-bottom: 7px; }
-      .mission { height: 32px; font-size: 1.15rem; }
+      .mission { height: 38px; font-size: 1.35rem; }
       .lock-control { margin: 7px auto 4px; }
       .lock-launch { width: 56px; height: 58px; }
       .lock-visual { transform: scale(.76); transform-origin: center bottom; }
-      h1 { font-size: 1.85rem; }
-      .instruction { min-height: 0; margin: 5px auto 7px; font-size: .7rem; }
+      h1 { font-size: 2.1rem; }
+      .instruction { min-height: 0; margin: 5px auto 7px; font-size: .85rem; }
       .permanent-clue { margin: 0 0 8px; }
       .digits { margin-bottom: 9px; }
-      .digit { height: clamp(62px, 17vw, 78px); aspect-ratio: auto; font-size: 2.35rem; }
+      .digit { height: clamp(62px, 17vw, 78px); aspect-ratio: auto; font-size: 2.7rem; }
       .keypad { gap: 6px; }
-      .key { height: 36px; font-size: 1.35rem; }
+      .key { height: 48px; font-size: 1.75rem; }
       .footer-status { margin-top: 9px; }
     }
 
@@ -407,9 +451,9 @@
       .digits { gap: 6px; margin-bottom: 7px; }
       .digit { height: clamp(46px, 12vw, 62px); aspect-ratio: auto; font-size: 2.15rem; }
       .keypad { gap: 5px; }
-      .key { height: 28px; font-size: 1.25rem; }
-      .key.enter { font-size: .76rem; }
-      .key.delete { font-size: .9rem; }
+      .key { height: 34px; font-size: 1.4rem; }
+      .key.enter { font-size: .86rem; }
+      .key.delete { font-size: 1rem; }
       .footer-status { display: none; }
     }
 
@@ -431,9 +475,9 @@
       .digits { gap: 4px; margin-bottom: 4px; }
       .digit { height: 35px; font-size: 1.55rem; }
       .keypad { gap: 3px; }
-      .key { height: 20px; font-size: 1rem; }
-      .key.enter { font-size: .57rem; }
-      .key.delete { font-size: .67rem; }
+      .key { height: 24px; font-size: 1.1rem; }
+      .key.enter { font-size: .64rem; }
+      .key.delete { font-size: .76rem; }
     }
   </style>
 </head>
@@ -449,11 +493,11 @@
         </div>
         <div class="status"><span class="signal">&#9646;&#9646;&#9646; RED SEGURA</span><span id="clock">--:--:--</span></div>
         <div class="lock-control">
-          <button class="lock-launch" id="lockLaunch" type="button" aria-label="Iniciar sesión de 60 segundos" title="Iniciar sesión de 60 segundos"><span class="lock-visual" aria-hidden="true"></span></button>
-          <span class="timer" id="timer">TOCA EL CANDADO · 60s</span>
+          <button class="lock-launch" id="lockLaunch" type="button" aria-label="Iniciar sesión de 180 segundos" title="Iniciar sesión de 180 segundos"><span class="lock-visual" aria-hidden="true"></span></button>
+          <span class="timer" id="timer">TOCA EL CANDADO · 180s</span>
         </div>
         <h1>ACCESO RESTRINGIDO</h1>
-        <p class="instruction" id="instruction">Selecciona una misión y toca el candado<br>para habilitar la terminal durante 60 segundos.</p>
+        <p class="instruction" id="instruction">Selecciona una misión y toca el candado<br>para habilitar la terminal durante 180 segundos.</p>
         <div class="permanent-clue" aria-label="Pista permanente: números 9 y 3"><span>DATOS RECUPERADOS</span><strong>9 · 3</strong></div>
         <div class="digits" aria-label="Código de cuatro dígitos">
           <input class="digit" inputmode="numeric" maxlength="1" aria-label="Primer dígito" readonly />
@@ -501,6 +545,7 @@
     const lockLaunch = document.querySelector('#lockLaunch');
     const clock = document.querySelector('#clock');
     const lemonTrigger = document.querySelector('#lemonTrigger');
+    const SESSION_DURATION = 180;
     let activeMission = '1';
     let specialChallenge = false;
     let entry = Array(4).fill('');
@@ -537,6 +582,10 @@
       }
       const accessCode = specialChallenge ? '9324' : missionCodes[activeMission];
       if (entry.join('') === accessCode) {
+        clearInterval(countdownId);
+        setControlsEnabled(false);
+        timer.classList.remove('active');
+        lockLaunch.disabled = false;
         screen.classList.add('success');
         modalTitle.textContent = specialChallenge ? 'PRUEBA ESPECIAL' : 'CAJA ABIERTA';
         modalCopy.textContent = specialChallenge
@@ -566,7 +615,7 @@
 
     function startTimer() {
       clearInterval(countdownId);
-      let remaining = 60;
+      let remaining = SESSION_DURATION;
       setControlsEnabled(true);
       reset();
       timer.classList.add('active');
@@ -579,7 +628,7 @@
           setControlsEnabled(false);
           timer.classList.remove('active');
           lockLaunch.disabled = false;
-          timer.textContent = 'TOCA EL CANDADO · 60s';
+          timer.textContent = 'TOCA EL CANDADO · 180s';
           instruction.textContent = 'Tiempo agotado. Toca el candado para una nueva sesión.';
           return;
         }
@@ -610,33 +659,27 @@
 
     missions.forEach((mission) => {
       mission.addEventListener('click', () => {
+        const shouldRestartTimer = sessionActive;
         activeMission = mission.dataset.mission;
         specialChallenge = false;
         lemonTrigger.classList.remove('active');
         missions.forEach((button) => button.classList.toggle('active', button === mission));
-        reset();
+        if (shouldRestartTimer) startTimer();
+        else reset();
         instruction.innerHTML = `Misión ${activeMission} seleccionada. Ingresa los cuatro dígitos<br>para liberar el premio.`;
       });
     });
 
     lemonTrigger.addEventListener('click', () => {
+      const shouldRestartTimer = sessionActive;
       specialChallenge = true;
       lemonTrigger.classList.add('active');
       missions.forEach((button) => button.classList.remove('active'));
-      reset();
+      if (shouldRestartTimer) startTimer();
+      else reset();
       instruction.innerHTML = 'Prueba especial habilitada. Toca el candado e ingresa<br>el código secreto de cuatro dígitos.';
     });
 
-    document.addEventListener('keydown', (event) => {
-      if (!sessionActive || modal.classList.contains('show')) return;
-      if (/^\d$/.test(event.key)) addDigit(event.key);
-      if (event.key === 'Backspace') {
-        const lastIndex = [...entry.keys()].reverse().find((index) => !locked[index] && entry[index]);
-        if (lastIndex !== undefined) entry[lastIndex] = '';
-        renderEntry();
-      }
-      if (event.key === 'Enter') validate();
-    });
     retry.addEventListener('click', reset);
     lockLaunch.addEventListener('click', startTimer);
     updateClock();
